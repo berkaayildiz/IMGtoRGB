@@ -1,8 +1,9 @@
-from PIL import Image as Im
+import os
 import pickle
+from PIL import Image as Im
 
 
-def IMGtoRGB(path, outfileName='image'):
+def IMGtoRGB(path):
     
     image = Im.open(path)
  
@@ -10,9 +11,13 @@ def IMGtoRGB(path, outfileName='image'):
     width = image.width
 
     RGBimage = image.convert("RGB")
-    
-    outfileText = open(outfileName + 'Text.txt', 'a')
-    outfilePickle = open(outfileName + 'Pickle.txt', 'wb')
+
+    outfileName = os.path.splitext(path)[0]
+
+    # Names the outfiles according to name of the image file.
+
+    outfileText = open(f'{outfileName}Text.txt', 'w')
+    outfilePickle = open(f'{outfileName}Pickle.txt', 'wb')
 
     # Creates two txt file to store both
     # serialized and non-serialized version of the file.
@@ -43,7 +48,7 @@ def IMGtoRGB(path, outfileName='image'):
     return outfileText, outfilePickle
 
 def main():
-    IMGtoRGB('image.png', 'image')
+    IMGtoRGB('image.png')
 
     # Enter the path to your image file.
     # Other formats besides .png are possible.
