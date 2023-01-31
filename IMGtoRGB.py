@@ -11,7 +11,11 @@ def IMGtoRGB(path, outfileName='image'):
 
     RGBimage = image.convert("RGB")
     
-    outfileText = open(outfileName + '.txt', 'a')
+    outfileText = open(outfileName + 'Text.txt', 'a')
+    outfilePickle = open(outfileName + 'Pickle.txt', 'wb')
+
+    # Creates two txt file to store both
+    # serialized and non-serialized version of the file.
 
     rowList = []
 
@@ -29,12 +33,20 @@ def IMGtoRGB(path, outfileName='image'):
         rowList.append(tempRow)
         outfileText.write(str(tempRow) + 2*'\n')
         
-        # "2*'\n'" is added to make file easier to read.
+        # "2*'\n'" is added to make non-serialized file easier to read.
 
-    return outfileText
+    pickle.dump(rowList, outfilePickle)
+
+    outfileText.close()
+    outfilePickle.close()
+    
+    return outfileText, outfilePickle
 
 def main():
     IMGtoRGB('image.png', 'image')
+
+    # Enter the path to your image file.
+    # Other formats besides .png are possible.
 
 
 main()
