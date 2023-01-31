@@ -1,22 +1,40 @@
-from PIL import Image
+from PIL import Image as Im
+import pickle
 
-im = Image.open("image.png")    # This could be any type of image, not strictly png.
 
-width = im.width
-height = im.height
+def IMGtoRGB(path, outfileName='image'):
+    
+    image = Im.open(path)
+ 
+    height = image.height
+    width = image.width
 
-def IMGtoRGB(im):
-    RGBim = im.convert('RGB')
-    text = open('imagergb.txt', 'a')
+    RGBimage = image.convert("RGB")
+    
+    outfileText = open(outfileName + '.txt', 'a')
+
+    rowList = []
+
+    # This list stores all of the data in a row-major order.
 
     for y in range(height):
         tempRow = []
-        
+
+        # This list stores the data of the current row.
+
         for x in range(width):
-            r, g, b = RGBim.getpixel((x, y))
-            tempRow.append((r,g,b))
+            r, g, b = RGBimage.getpixel((x,y))
+            tempRow.append((r, g, b))
+        
+        rowList.append(tempRow)
+        outfileText.write(str(tempRow) + 2*'\n')
+        
+        # "2*'\n'" is added to make file easier to read.
 
-        text.write(str(tempRow) + 2*'\n')   # 2*'\n' was added to make file easier to read.
-    return text
+    return outfileText
 
-IMGtoRGB(im)
+def main():
+    IMGtoRGB('image.png', 'image')
+
+
+main()
