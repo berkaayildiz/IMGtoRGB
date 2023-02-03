@@ -33,7 +33,7 @@ where `[image_file]` is the path to the image file to be converted, and `[format
 ## Example
 
 ```bash
-python IMGtoRGB.py [image.png] [text]
+python IMGtoRGB.py image.png text
 ```
 
 This will convert the 'image.png' file to RGB format and write the data to a text file 'image.txt'.
